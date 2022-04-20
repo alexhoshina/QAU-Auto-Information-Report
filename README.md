@@ -1,4 +1,4 @@
-# QAU-Atuo-Information-Report
+# QAU-Auto-Information-Report
 ## 简介
 这个Python脚本用于实现青岛农业大学每日信息上报的自动化
 
