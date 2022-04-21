@@ -14,7 +14,8 @@ Requests    ` pip install requests `
 * 使用  
 打开main.py  
 对其中的User内的内容进行填写  
-然后！Run！
+然后！Run！  
+## ！！！！！本脚本代码仍未完善，如要使用请按需修改！！！！！
 ## ToDo
 * 添加config文件以方便使用  
 * 优化正则表达式  
