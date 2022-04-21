@@ -4,6 +4,7 @@ import time
 
 #模式选择，数值为0或1，目前仅1模式可用
 model = 1
+
 Time = time.strftime("%Y-%m-%d", time.localtime())
 get_key_url = 'https://zhxg.qau.edu.cn/xuegong/api/BaseData/GetAuthCode'
 get_token_url = 'https://zhxg.qau.edu.cn/xuegong/api/UserAuth/GetManUserLogin'
