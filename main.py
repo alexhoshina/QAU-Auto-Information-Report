@@ -38,7 +38,7 @@ def get_key():
     key_0 = re.search(r'Key...(.{36})', key_origin.text)
     return key_0.group(1)
 
-获取X-Token
+#获取X-Token
 def get_token(key,username,userpassword):
     json_data = {
     'LoginName': '%s'%(username),
