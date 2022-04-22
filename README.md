@@ -16,7 +16,8 @@
 1、打开config.json文件  
 2、对其中的参数进行填写并保存     
 3、运行main.py  
-* (可选)将脚本部署至腾讯云函数 ` https://cloud.tencent.com/product/scf`  
+* (可选)将脚本部署至腾讯云函数 ` https://cloud.tencent.com/product/scf` 
+**将脚本部署至云函数可以实现每日自动上报，无需购买服务器等** 
 1、如果要将脚本部署至腾讯云函数，那么您**仅需要下载SCF.zip**  
 2、打开并登录 ` https://cloud.tencent.com/product/scf`  
 3、点击管理控制台，进入云函数管理控制台  
