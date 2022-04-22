@@ -16,6 +16,18 @@
 1、打开config.json文件  
 2、对其中的参数进行填写并保存     
 3、运行main.py  
+* (可选)将脚本部署至腾讯云函数 ` https://cloud.tencent.com/product/scf`  
+1、如果要将脚本部署至腾讯云函数，那么您**仅需要下载SCF.zip**  
+2、打开并登录 ` https://cloud.tencent.com/product/scf`  
+3、点击管理控制台，进入云函数管理控制台  
+4、在左侧选择函数服务->点击`新建`->选择`从头开始`  
+5、`运行环境` 选择 `Python3.7`  
+6、`提交方法` 选择 `本地上传zip包`  
+7、在函数代码处上传SCF.zip  
+8、点击触发器配置->自定义创建  
+9、点击完成 等待函数成功创建  
+10、进入`函数代码`填写`config.json`文件  
+11、填写完毕后点击部署(测试)
   
 ## 参数说明
 * model  
@@ -31,7 +43,7 @@
 **参数说明：** 这个参数是您在登录每日上报系统是所使用的密码
 * cookies  
 **参数值：**   
-**参数说明：** 这是您的cookies，关于cookies的获取请参看cookies章节
+**参数说明：** 这是cookies，您无须获取，也无需改动
 * NowDate  
 **参数值：**  xxxx-xx-xx  
 **参数说明：** 这是上报的时间，无需填写，将会自动获取
@@ -99,19 +111,18 @@
 **参数值：**  
 **参数说明：** 外出具体行程，如无行程则留空  
   
-  
-## Cookise的获取  
-* 获取前的准备  
-1、您的学工账号和密码  
-2、Google Chrome浏览器或Microsoft Edge浏览器  
-* 获取  
-打开浏览器，按下F12呼出开发者工具  
-将视图调整至Network(网络)  
-在当前标签页进入 ` https://zhxg.qau.edu.cn/zhxg/ `  
-依此点击开发者工具中的Network(网络)->Name(名称)中的zhxg/->Headers->Request Headers  
-找到其中的Cookise，找到在最尾部的 ` insert_cookie=xxxx`  
-insert_cookie=后的数字便是我们要的cookise  
-  
+ 
+## ~~Cookise的获取~~  **经过我们的测试cookise为固定值，您无需获取**  
+* ~~获取前的准备~~  
+~~1、您的学工账号和密码~~  
+~~2、Google Chrome浏览器或Microsoft Edge浏览器~~  
+* ~~获取~~  
+~~打开浏览器，按下F12呼出开发者工具~~  
+~~将视图调整至Network(网络)~~  
+~~在当前标签页进入 ` https://zhxg.qau.edu.cn/zhxg/ `~~  
+~~依此点击开发者工具中的Network(网络)->Name(名称)中的zhxg/->Headers->Request Headers~~  
+~~找到其中的Cookise，找到在最尾部的 ` insert_cookie=xxxx`~~  
+~~insert_cookie=后的数字便是我们要的cookise~~
 
 ## ToDo
 * ~~添加config文件以方便使用~~  
@@ -123,4 +134,6 @@ insert_cookie=后的数字便是我们要的cookise
 * 2022-4-21：  
     对代码进行了一定程度上的优化(~~或许是负优化？~~)  
 * 2022-4-22：  
-    基本完成了整个脚本的编写
+    基本完成了整个脚本的编写  
+* 2022-4-22：  
+    完成了对腾讯云函数的部署文件与教程
