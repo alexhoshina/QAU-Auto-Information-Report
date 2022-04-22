@@ -1,56 +1,42 @@
+# 变量名 xxxx_origin 通常代表post后取得的原始数据，一般需要经过截取处理后才能使用
+
+#初始化库
 import requests
 import re
 import time
 import json
 
-<<<<<<< HEAD
-=======
-#模式选择，数值为0或1，目前仅1模式可用
-model = 1
-
->>>>>>> 567cc0cd48d9a4444506c7da6dc24d73b816bdbe
+#获取当前日期，并存入Time变量中
 Time = time.strftime("%Y-%m-%d", time.localtime())
+
+#提交post中所用到的链接
 get_key_url = 'https://zhxg.qau.edu.cn/xuegong/api/BaseData/GetAuthCode'
 get_token_url = 'https://zhxg.qau.edu.cn/xuegong/api/UserAuth/GetManUserLogin'
 get_data_url = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/GetYesterdayData'
 enter_url = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/AddVirus'
 
+#关闭所有连接的证书验证
 requests.get(get_key_url,get_token_url, verify=False)
 requests.get(enter_url,get_data_url, verify=False)
 
-<<<<<<< HEAD
+#取得配置文件内的配置
 with open('config.json','r', encoding='UTF-8') as f:
     User = json.load(f)
-    
+#取得配置文件内配置 
 with open('config.json','r', encoding='UTF-8') as f:
     data = json.load(f)
+    #为配置文件内的NowDate提供数据
     data['NowDate'] = '%s'%(Time)
-=======
-User = {
-    'username' : 'your name',
-    'userpassword' : 'your password',
-    'cookies' : {'your cookies'},
-    'NowDate' : '%s'%(Time),
-    'Country': '中国',
-    'Province':'山东省',
-    'City':'青岛市',
-    'County':'平度市',
-    'street_number':'海信路',
-    'CurrentPosition':'中国山东省青岛市平度市海信路',
-    # 您第一针疫苗接种时间，请严格遵守下格式
-    'FirstStitchDate':'xxxx-xx-xx',
-    # 您第二针疫苗接种时间，请严格遵守下格式
-    'TwoStitchDate':'xxxx-xx-xx'
-}    
->>>>>>> 567cc0cd48d9a4444506c7da6dc24d73b816bdbe
+#
 
 #获取key
 def get_key():
     key_origin = requests.post(get_key_url,  cookies=User['cookies'])
-    key_0 = re.search(r'Key...(.{36})', key_origin.text)
-    return key_0.group(1)
+    #利用正则提取出key值，这个正则式等待优化
+    key = re.search(r'Key...(.{36})', key_origin.text)
+    return key.group(1)
 
-#获取X-Token
+#获取X-token
 def get_token(key,username,userpassword):
     json_data = {
     'LoginName': '%s'%(username),
@@ -59,41 +45,36 @@ def get_token(key,username,userpassword):
     'ApplyType': 1,
     }
     token_origin = requests.post(get_token_url,  cookies=User['cookies'], json=json_data)
-    token_0 = re.search(r'Token":"(.+)","E', token_origin.text)
-    return token_0.group(1)
+    #利用正则提取出token值
+    token = re.search(r'Token":"(.+)","E', token_origin.text)
+    return token.group(1)
 
-<<<<<<< HEAD
+#获取信息上报的数据
 def get_data(token,Time,data):
     if(User['model']):
+        #预设模式
+
+        #删除多余的不必要键与键值
         del data['username']
         del data['cookies']
         del data['userpassword']
         del data['model']
-        print(data)
+        #将字典变量转为字符串
         data_str = json.dumps(data,ensure_ascii=False)
-        print(data_str)
-=======
-#上报数据获取模块，分为1模式（预设模式）和0模式（昨日模式），目前昨日模式存在无法解决的bug，请勿使用。（由变量model控制模式）
-def get_data(token,Time):
-    if(model):
-        data = '{"NowDate":"%s","UserType":1,"Country":"%s","Province":"%s","City":"%s","County":"%s","street_number":"%s","CurrentPosition":"%s","FirstStitchDate":"%s","TwoStitchDate":"%s","ThreeStitchDate":null,"TodaySchedule":0,"BRHGTJZRSFYXLQKOne":0,"BRHGTJZRSFYXLQKTwo":0,"SZSQTNSFFSYQ":0,"LJSHJCS":0,"BRHGTJZRSFYYXZZWQY":0,"JRSFCSWFL":0,"JRSFCSNQTDJSFQ":0,"DayTemperature":1,"Vaccination":2,"Remark":""}'%(User['NowDate'],User['Country'],User['Province'],User['City'],User['County'],User['street_number'],User['CurrentPosition'],User['FirstStitchDate'],User['TwoStitchDate'])
->>>>>>> 567cc0cd48d9a4444506c7da6dc24d73b816bdbe
     else:
+        #获取昨日数据模式，此模式无法取得街道信息和定位信息，故使用预设中的参数值
         headers = {
             'Accept': 'application/json, text/plain, */*',
             'X-Token': token,
         }
-        data_0 = requests.get(get_data_url, headers=headers, cookies=User['cookies'])
-        print(data_0.text)
-        data = data_0.text
+        data_origin = requests.get(get_data_url, headers=headers, cookies=User['cookies'])
+        data = data_origin.text
+        #利用正则填补所获取的Data数据中所缺失的部分
         data = re.sub(r'"NowDate":null', '"NowDate":"%s"'%Time, data)
-<<<<<<< HEAD
         data = re.sub(r'"County":""', '"County":"%s","CurrentPosition":"%s"'%(User['County'],User['CurrentPosition']), data)
+        #将字典变量转为字符串
         data_str = re.search(r'({"Id".+)',data).group(1)
     return data_str
-=======
-    return data
->>>>>>> 567cc0cd48d9a4444506c7da6dc24d73b816bdbe
 
 #上报模块
 def enter(data,token):
@@ -103,11 +84,8 @@ def enter(data,token):
     }
     response = requests.post(enter_url, headers=headers, cookies=User['cookies'], data=data.encode("utf-8"))
     response.enconding="utf-8"
+    #打印上报后的信息
     print('\n\n%s' % response.text)
 
-<<<<<<< HEAD
+#调用上报模块函数
 enter(get_data(get_token(get_key(),User['username'],User['userpassword']),User['NowDate'],data),get_token(get_key(),User['username'],User['userpassword']))
-=======
-#运行上报
-enter(get_data(get_token(get_key(),User['username'],User['userpassword']),User['NowDate']),get_token(get_key(),User['username'],User['userpassword']))
->>>>>>> 567cc0cd48d9a4444506c7da6dc24d73b816bdbe
