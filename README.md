@@ -31,7 +31,7 @@
 **参数说明：** 这个参数是您在登录每日上报系统是所使用的密码
 * cookies  
 **参数值：**   
-**参数说明：** 这是您的cookies，29594869
+**参数说明：** 这是您的cookies，关于cookies的获取请参看cookies章节
 * NowDate  
 **参数值：**  xxxx-xx-xx  
 **参数说明：** 这是上报的时间，无需填写，将会自动获取
@@ -100,17 +100,17 @@
 **参数说明：** 外出具体行程，如无行程则留空  
   
   
-## Cookise的获取  (Cookise经多人确认为同一个  )
-~~* 获取前的准备  
+## Cookise的获取  
+* 获取前的准备  
 1、您的学工账号和密码  
-2、Google Chrome浏览器或Microsoft Edge浏览器~~  
-~~* 获取  
+2、Google Chrome浏览器或Microsoft Edge浏览器  
+* 获取  
 打开浏览器，按下F12呼出开发者工具  
 将视图调整至Network(网络)  
 在当前标签页进入 ` https://zhxg.qau.edu.cn/zhxg/ `  
 依此点击开发者工具中的Network(网络)->Name(名称)中的zhxg/->Headers->Request Headers  
 找到其中的Cookise，找到在最尾部的 ` insert_cookie=xxxx`  
-insert_cookie=后的数字便是我们要的cookise~~
+insert_cookie=后的数字便是我们要的cookise  
   
 
 ## ToDo
