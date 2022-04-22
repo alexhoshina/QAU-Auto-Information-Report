@@ -103,14 +103,14 @@
 ## Cookise的获取  (Cookise经多人确认为同一个  )
 ~~* 获取前的准备  
 1、您的学工账号和密码  
-2、Google Chrome浏览器或Microsoft Edge浏览器  
-~* 获取  
+2、Google Chrome浏览器或Microsoft Edge浏览器~~  
+~~* 获取  
 打开浏览器，按下F12呼出开发者工具  
 将视图调整至Network(网络)  
 在当前标签页进入 ` https://zhxg.qau.edu.cn/zhxg/ `  
 依此点击开发者工具中的Network(网络)->Name(名称)中的zhxg/->Headers->Request Headers  
 找到其中的Cookise，找到在最尾部的 ` insert_cookie=xxxx`  
-insert_cookie=后的数字便是我们要的cookise  
+insert_cookie=后的数字便是我们要的cookise~~
   
 
 ## ToDo
