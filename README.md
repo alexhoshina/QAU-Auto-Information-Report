@@ -12,7 +12,9 @@
 1、Python3.9(此脚本由python3.9编写，其他版本未做测试)   
 2、Requests 可以使用如下pip命令安装  
 ` pip install requests `  
-3、利用git或github的下载代码zip功能取得代码
+3、pytz 可以使用如下pip命令安装  
+`pip install pytz`  
+4、利用git或github的下载代码zip功能取得代码
 * 使用  
 1、打开config.json文件  
 2、对其中的参数进行填写并保存     
