@@ -5,9 +5,12 @@ import requests
 import re
 import time
 import json
+import pytz
+import datetime
 
 #获取当前日期，并存入Time变量中
-Time = time.strftime("%Y-%m-%d", time.localtime())
+tz = pytz.timezone('Asia/Shanghai') 
+Time = datetime.datetime.fromtimestamp(int(time.time()), pytz.timezone('Asia/Shanghai')).strftime(' %Y-%m-%d ')
 
 #提交post中所用到的链接
 get_key_url = 'https://zhxg.qau.edu.cn/xuegong/api/BaseData/GetAuthCode'
@@ -27,7 +30,6 @@ with open('config.json','r', encoding='UTF-8') as f:
     data = json.load(f)
     #为配置文件内的NowDate提供数据
     data['NowDate'] = '%s'%(Time)
-#
 
 #获取key
 def get_key():
