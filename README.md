@@ -13,12 +13,12 @@
 ` pip install requests `  
 3、利用git或github的下载代码zip功能取得代码
 * 使用  
-1、打开config.json文件  
+1、打开config.json文件和user.json文件  
 2、对其中的参数进行填写并保存     
 3、运行main.py  
   
 ## 参数说明
-* model  
+* model     ** 当前仅有预设模式可用
 **参数值：** 0/1   
 **参数说明：** 这是模式选择参数，1为 ` 预设模式 ` 0为 ` 昨日模式 ` 。  
 预设模式下将使用config.json中所设置的内容来作为上报的参数  
