@@ -29,17 +29,17 @@
 * 使用腾讯云函数请下载`SCF.zip`，阿里函数计算请下载`AliFC.zip`
 1. 进入阿里函数计算官网 `https://fcnext.console.aliyun.com/overview`，登录后进入控制台。  
 2. 点击左侧栏的`服务及函数`，然后点击`创建服务`。
-        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures\AliFC-1.png)  
+        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures/AliFC-1.png)  
 3. 输入服务名称和描述(可留空)
-        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures\AliFC-2.png)  
+        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures/AliFC-2.png)  
 4. 点击左侧栏的`函数管理`，然后点击`创建函数`。
-        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures\AliFC-3.png)  
+        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures/AliFC-3.png)  
 5. 创建方式选择`从零创建`，运行环境选择`python`， 代码上传方式选择`通过ZIP包上传代码`，代码包选择下载好的`AliFC.zip`。
-        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures\AliFC-4.png)  
+        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures/AliFC-4.png)  
 6. 触发器类型选择`定时触发器`，触发方式选择`指定时间`，时区选择`Asia/Shanghai(北京时间)`，指定一个时间后点击`创建`。
-        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures\AliFC-5.png)  
+        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures/AliFC-5.png)  
 7. 等待在线IDE启动后，打开`config.json`和`user.json`对其参数进行填写，填写完毕后，点击右上角的`保存并部署`
-        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures\AliFC-6.png)
+        ![](https://github.com/alexhoshina/QAU-Auto-Information-Report/blob/main/Pictures/AliFC-6.png)
 
 
 
