@@ -50,7 +50,7 @@ class shangbao(origin):
         return token['ResultValue']['Token']
     def data_get(self):
         if(self.User['model'] == '1'):#data_config
-           data = json.dumps(self.data_dict,ensure_ascii=False)
+            data = json.dumps(self.data_dict,ensure_ascii=False)
         else:#data_origin
             pass
         return data
