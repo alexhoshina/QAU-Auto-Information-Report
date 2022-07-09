@@ -1,111 +1,96 @@
 import requests
-import re
 import time
 import json
 import datetime
 import pytz
 
-def url():
-    global get_key_url
-    global get_token_url
-    global get_Qnr_url
-    global get_data_url
-    global enter_url
-    global Server_url
-    get_key_url = 'https://zhxg.qau.edu.cn/xuegong/api/BaseData/GetAuthCode'
-    get_token_url = 'https://zhxg.qau.edu.cn/xuegong/api/UserAuth/GetManUserLogin'
-    get_Qnr_url = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/GetYesterdayData'
-    get_data_url = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/GetVirusBaseList'
-    enter_url = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/AddVirus'
-    Server_url = 'https://sctapi.ftqq.com/%s'%(User['Server'])
+class origin():
+    def __init__(self):
+        self.key_api = 'https://zhxg.qau.edu.cn/xuegong/api/BaseData/GetAuthCode'
+        self.token_api  = 'https://zhxg.qau.edu.cn/xuegong/api/UserAuth/GetManUserLogin'
+        self.Qnr_api  = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/GetYesterdayData'
+        self.data_api  = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/GetVirusBaseList'
+        self.enter_api  = 'https://zhxg.qau.edu.cn/xuegong/api/DayVirus/AddVirus'
+        self.Server_api  = 'https://sctapi.ftqq.com/%s'%(self.User()['Server'])
+        self.User = self.User()
+        self.data_dict = self.data_dict()
+    def User(self):
+        with open('User.json','r', encoding='UTF-8') as f:
+            User = json.load(f)
+        return User
+    def data_dict(self):
+        with open('config.json','r', encoding='UTF-8') as f:
+                data_dict = json.load(f)
+        Time = datetime.datetime.fromtimestamp(int(time.time()), pytz.timezone('Asia/Shanghai')).strftime(' %Y-%m-%d ')
+        data_dict['NowDate'] = '%s'%(Time)
+        return data_dict
 
-def get_User():
-    global User
-    with open('User.json','r', encoding='UTF-8') as f:
-        User = json.load(f)
-
-def get_data_dict():
-    global data_dict
-    with open('config.json','r', encoding='UTF-8') as f:
-            data_dict = json.load(f)
-    Time = datetime.datetime.fromtimestamp(int(time.time()), pytz.timezone('Asia/Shanghai')).strftime(' %Y-%m-%d ')
-        #为配置文件内的NowDate提供数据
-    data_dict['NowDate'] = '%s'%(Time)
-
-def get_key():
-    global key
-    key_origin = requests.post(get_key_url,  cookies=data_dict['cookies'], verify=False)
-    #利用正则提取出key值
-    key = re.search(r'"Key":"(.+)","I', key_origin.text).group(1)
- 
-def get_token():
-    global token
-    json_data = {
-    'LoginName': '%s'%(User['username']),
-    'Pwd': '%s'%(User['userpassword']),
-    'key': '%s'%(key),
-    'ApplyType': 1,
-    }
-    token_origin = requests.post(get_token_url,  cookies=data_dict['cookies'], json=json_data, verify=False)
-    #利用正则提取出token值
-    token = re.search(r'Token":"(.+)","E', token_origin.text).group(1)
-
-def get_data():
-    global data
-    if(User['model'] == '1'):
-        #data_config
-        #将字典变量转为字符串
-        data = json.dumps(data_dict,ensure_ascii=False)
-    else:
-        #data_origin
-        headers = {'Accept': 'application/json, text/plain, */*',
-                    'X-Token': '%s'%(token),
-                    'AppType': '2#3.0.0#1',
-                    'Content-Type': 'application/json;charset=UTF-8',
-                }
-        json_data = '{"PageSize":34,"PageIndex":4,"total":34,"UserInfo":"","Mobile":"","NowProvince":"","NowCity":"","ReportedStartTime":"2022-04-23 00:00:00","ReportedEndTime":"","UserType":1}'
-        requests.get(get_data_url, verify=False)
-        woshi = requests.post(get_data_url, headers=headers, cookies=data_dict['cookies'], data=json_data, verify=False).text
-        print(woshi)
-
-def get_Qnr():
-    global Qnr
-    headers = {
-            'Accept': 'application/json, text/plain, */*',
-            'X-Token': '%s'%(token),
+class shangbao(origin):
+    def __init__(self):
+        origin.__init__(self)
+        self.key = self.key_get()
+        self.token = self.token_get()
+        self.data = self.data_get()
+        self.enter = self.enter_start()
+    def key_get(self):
+        key0 = requests.post(self.key_api, cookies=self.data_dict['cookies'], verify=False).json()
+        key1 = json.dumps(key0)
+        key = json.loads(key1)
+        return key['ResultValue']['Key']
+    def token_get(self):
+        json_data = {
+            'LoginName': self.User['username'],
+            'Pwd': self.User['userpassword'],
+            'key': self.key,
+            'ApplyType': 1,
         }
-    Qnr_origin = requests.get(get_Qnr_url, headers=headers, cookies=data_dict['cookies'], verify=False)
-    Qnr = Qnr_origin.text
+        token0 = requests.post(self.token_api, cookies=self.data_dict['cookies'], json=json_data, verify=False).json()
+        token1 = json.dumps(token0)
+        token = json.loads(token1)
+        return token['ResultValue']['Token']
+    def data_get(self):
+        if(self.User['model'] == '1'):#data_config
+           data = json.dumps(self.data_dict,ensure_ascii=False)
+        else:#data_origin
+            pass
+        return data
+    def enter_start(self):
+        headers = {
+        'X-Token': self.token,
+        'Content-Type': 'application/json;charset=UTF-8',
+        }
+        enter0 = requests.post(self.enter_api, headers=headers, cookies=self.data_dict['cookies'], data=self.data.encode("utf-8"), verify=False).json()
+        enter1 = json.dumps(enter0)
+        enter = json.loads(enter1)
+        return enter
 
-def enter():
-    global enter
-    headers = {
-    'X-Token': token,
-    'Content-Type': 'application/json;charset=UTF-8',
-    }
-    enter = requests.post(enter_url, headers=headers, cookies=data_dict['cookies'], data=data.encode("utf-8"), verify=False)
-    #enter.enconding="utf-8"
-    print (enter.text)
+class tongzhi():
+    def Qnr(self):
+        headers = {
+                'Accept': 'application/json, text/plain, */*',
+                'X-Token': ShangBao.token,
+            }
+        Qnr0 = requests.get(ShangBao.Qnr_api, headers=headers, cookies=ShangBao.data_dict['cookies'], verify=False).json()
+        Qnr1 = json.dumps(Qnr0)
+        Qnr = json.loads(Qnr1)
+        return Qnr['ResultValue']
+    def Estimate(self):
+        if(ShangBao.enter['RequestMsg'] == ''):
+            Tz = '上报已成功'
+        elif(ShangBao.enter['RequestMsg'] == '今日您已经上报，无需重复上报'):
+            Tz = '今日已成功上报'
+        else:
+            Tz = '上报未成功，请手动上报.\n以下内容为返回信息\nRequestMsg: %s'%(ShangBao.enter['RequestMsg'])
+        return Tz
+    def Server(self):
+        data = {
+        'title': '每日上报情况通知',
+        'desp': '上报状态:\n%s\n\n上报问卷情况:\n %s'%(self.Estimate(),self.Qnr()),
+        }
+        requests.post(ShangBao.Server_api, params=data)
 
-def Server():
-    data = {
-    'title': '每日上报情况通知',
-    'desp': '上报状态：\n%s \n\n上报问卷情况：\n %s'%(enter.text,Qnr),
-    }
-    se = requests.post(Server_url, params=data).text
-    print(se)
-
-def main():
-    get_User()
-    get_data_dict()
-    url()
-    get_key()
-    get_token()
-    get_Qnr()
-    get_data()
-    enter()
-    if(User['Server_on-off'] == '1'):
-        Server()
-    else:
-        print('server酱未开启')
-main()
+if (__name__ == '__main__'):
+    ShangBao = shangbao()
+    if (ShangBao.User['Server_on-off'] == '1'):
+        TongZhi = tongzhi()
+        TongZhi.Server()
