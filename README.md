@@ -9,8 +9,7 @@
 * 使用前的准备工作  
 1、Python3.9(此脚本由python3.9编写，其他版本未做测试)   
 2、安装依赖库  
-` pip install requests `  
-` pip install pytz `  
+` pip install requests `   
 3、利用git或github的下载代码zip功能取得代码  
 4、打开config.json文件和user.json文件  
 5、对其中的参数进行填写并保存     
@@ -151,4 +150,3 @@
   
 # ToDo
 * 学习GUI界面，添加可视化界面 
-
