@@ -118,7 +118,8 @@ def main():
     broadcast.case2 = result # 上报结果
     broadcast.qnr = qnr # 问卷内容
     # 发送广播
-    broadcast.Server(user['ServerKey'])# 调用广播对象的Server方法，传入ServerKey
+    if(user['ServerKey'] != ''):
+        broadcast.Server(user['ServerKey'])# 调用广播对象的Server方法，传入ServerKey
     broadcast.Log()# 在本地打印日志
 
 # 用于判断是否是主程序
