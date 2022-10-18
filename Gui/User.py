@@ -85,7 +85,6 @@ class User ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
-		# Connect Events
 		self.UserName_textCtrl.Bind( wx.EVT_TEXT, self.Set_Username )
 		self.UserPwd_textCtrl.Bind( wx.EVT_TEXT, self.Set_Userpwd )
 		self.SvererKey_textCtrl.Bind( wx.EVT_TEXT, self.Set_ServerKey )
@@ -94,9 +93,6 @@ class User ( wx.Frame ):
 
 	def __del__( self ):
 		pass
-
-
-	# Virtual event handlers, override them in your derived class
 	def Set_Username( self, event ):
 		event.Skip()
 	def Set_Userpwd( self, event ):

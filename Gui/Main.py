@@ -113,7 +113,6 @@ class Main ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
-		# Connect Events
 		self.m_button7.Bind( wx.EVT_BUTTON, self.Start_User )
 		self.m_button8.Bind( wx.EVT_BUTTON, self.Start_Config )
 		self.m_checkBox1.Bind( wx.EVT_CHECKBOX, self.Auto_Switch )
@@ -129,8 +128,6 @@ class Main ( wx.Frame ):
 	def __del__( self ):
 		pass
 
-
-	# Virtual event handlers, override them in your derived class
 	def Start_User( self, event ):
 		self.user = User(None)
 		self.user.Show()

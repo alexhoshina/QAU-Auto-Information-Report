@@ -1,5 +1,4 @@
 import json
-import os
 import re
 import wx
 import wx.xrc
@@ -297,7 +296,6 @@ class Config ( wx.Frame ):
 
 		self.Centre( wx.BOTH )
 
-		# Connect Events
 		self.m_button3.Bind( wx.EVT_BUTTON, self.Config_Save )
 		self.m_button4.Bind( wx.EVT_BUTTON, self.Config_Cancel )
 
@@ -317,7 +315,7 @@ class Config ( wx.Frame ):
 				elif (config[key] == '其他重点风险人员'):
 					config[key] = '4'
 			return config
-	# Virtual event handlers, override them in your derived class
+	
 	def Config_Save( self, event ):
 		config = {'cookies':'{"insert_cookie":"29594869"}'}
 		config['CurrentPosition'] = self.CurrentPosition_textCtrl.GetValue()
